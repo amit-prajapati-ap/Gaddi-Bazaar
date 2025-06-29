@@ -4,7 +4,7 @@ import {assets, cityList} from '../assets/assets'
 const Hero = () => {
     const [pickupLocation, setPickupLocation] = useState("")
   return (
-    <div className='h-screen flex flex-col items-center justify-center gap-14 bg-light text-center'>
+    <div className='xl:h-[800px] h-screen flex flex-col items-center justify-center gap-14 bg-light text-center'>
       <h1 className='text-4xl md:text-5xl font-semibold'>Luxury Cars on Rent</h1>
 
       <form className='flex flex-col md:flex-row items-start md:items-center justify-between p-6 rounded-lg md:rounded-full w-full max-w-80 md:max-w-200 bg-white shadow-[0px_8px_20px_rgba(0,0,0,0.1)]'>
