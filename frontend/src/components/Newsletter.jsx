@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import {toast} from 'react-toastify'
 
 const Newsletter = () => {
+  const [email, setEmail] = useState("")
+  const handleSubscribe = () => {
+    if (email.trim() === "") {
+      toast.error("Please enter your email")      
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      toast.error("Please enter a valid email")
+    } else {
+      toast("Subscribed successfully")
+    }
+  }
   return (
     <div className="xl:px-24 md:px-12 px-6 my-10 mb-24 max-w-[1200px] mx-auto">
       <div class="flex md:flex-row flex-col border border-gray-500/30 rounded-lg items-start md:items-center justify-between gap-5 text-sm max-w-5xl bg-white p-8 mx-auto">
@@ -17,8 +28,10 @@ const Newsletter = () => {
               class="py-2 px-3 w-full outline-none focus:border-indigo-500/60 transition max-w-64 border border-gray-500/30 rounded-md"
               type="text"
               placeholder="Enter you email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <button class="bg-primary hover:bg-primary-dull transition-all px-6 py-2 cursor-pointer rounded text-white font-medium">
+            <button onClick={handleSubscribe} class="bg-primary hover:bg-primary-dull transition-all px-6 py-2 cursor-pointer rounded text-white font-medium">
               Subscribe
             </button>
           </div>

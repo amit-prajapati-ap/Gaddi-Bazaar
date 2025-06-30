@@ -9,7 +9,6 @@ const Home = () => {
       <Banner/>
       <Testimonial/>
       <Newsletter/>
-      <Footer/>
     </>
   )
 }
