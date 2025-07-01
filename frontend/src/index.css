@@ -11,3 +11,7 @@
     --color-light: #F1F5F9;
     --color-borderColor: #c4c7d2;
 }
+
+.max-w-window {
+  max-width: 2600px;
+}

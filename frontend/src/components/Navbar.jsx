@@ -8,7 +8,7 @@ const Navbar = ({setShowLogin}) => {
     const navigate = useNavigate()
 
   return (
-    <div className={`${location.pathname === '/' && 'bg-white'} max-w-[1800px] mx-auto flex items-center justify-between px-6 md:px-12 lg:px-16 xl:px-24 text-gray-600 border-b border-borderColor relative transition-all`}>
+    <div className={`${location.pathname === '/' && 'bg-white'} max-w-window mx-auto flex items-center justify-between px-6 md:px-12 lg:px-16 xl:px-24 text-gray-600 border-b border-borderColor relative transition-all`}>
       <Link to={'/'}>
         <img src={assets.logo} alt="logo" className='sm:h-14 h-16' />
       </Link>

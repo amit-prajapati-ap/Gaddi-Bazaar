@@ -13,7 +13,7 @@ const Newsletter = () => {
     }
   }
   return (
-    <div className="xl:px-24 md:px-12 px-6 my-10 mb-24 max-w-[1200px] mx-auto">
+    <div className="xl:px-24 md:px-12 px-6 my-10 mb-24 max-w-window mx-auto">
       <div class="flex md:flex-row flex-col border border-gray-500/30 rounded-lg items-start md:items-center justify-between gap-5 text-sm max-w-5xl bg-white p-8 mx-auto">
         <div class="max-w-md w-full">
           <h1 class="text-3xl font-semibold text-gray-700">

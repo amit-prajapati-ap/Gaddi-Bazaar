@@ -51,7 +51,7 @@ const Testimonial = () => {
     },
   ];
   return (
-    <div className="max-w-[1200px] mx-auto mt-24">
+    <div className="max-w-[1500px] mx-auto mt-24">
       <Title
         title={"What Our Customes Say"}
         subTitle={

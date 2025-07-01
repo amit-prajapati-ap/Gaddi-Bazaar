@@ -7,5 +7,6 @@ import Banner from './Banner'
 import Testimonial from './Testimonial'
 import Newsletter from './Newsletter'
 import Footer from './Footer'
+import Loader from './Loader'
 
-export { Navbar, Hero, CarCard, FeaturedSection, Title, Banner, Testimonial, Newsletter, Footer };
+export { Navbar, Hero, CarCard, FeaturedSection, Title, Banner, Testimonial, Newsletter, Footer, Loader };

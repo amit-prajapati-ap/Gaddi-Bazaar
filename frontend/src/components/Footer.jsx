@@ -75,7 +75,7 @@ const Footer = () => {
     },
   ];
   return (
-    <div className="px-6 md:px-16 lg:px-24 xl:px-32 max-w-[1200px] mx-auto border-t border-gray-500/60">
+    <div className="px-6 md:px-16 lg:px-24 xl:px-32 max-w-window mx-auto border-t border-gray-500/60">
       <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-gray-500/30 text-gray-500">
         <div>
           <img onClick={() => {navigate('/') ; scrollTo(0, 0)}}
