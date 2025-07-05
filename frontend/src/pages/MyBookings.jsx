@@ -3,7 +3,7 @@ import {assets, dummyMyBookingsData} from '../assets/assets'
 import { Loader, Title } from '../components'
 
 const MyBookings = () => {
-  const [bookings, setBookings] = useState([])
+  const [bookings, setBookings] = useState(null)
   const currency = import.meta.env.VITE_CURRENCY
 
   const fetcMyBookings = async () => {
@@ -17,11 +17,12 @@ const MyBookings = () => {
   }, [])
   
 
-  return bookings ?  (
+  return (
     <div className='px-6 md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-window mx-auto'>
       <Title title={"My Bookings"} subTitle={"Explore our selection of premium vehicles available for your next adventure."} align={'left'}/>
 
-      <div>
+      {bookings ? (
+        <div>
         {bookings.map((booking, index) => (
           <div key={index} className='grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12 last:mb-32'>
 
@@ -70,9 +71,8 @@ const MyBookings = () => {
           </div>
         ))}
       </div>
+      ) : <Loader/>}
     </div>
-  ) : (
-    <Loader />
   )
 }
 

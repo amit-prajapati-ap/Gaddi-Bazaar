@@ -20,7 +20,7 @@ const Sidebar = () => {
         <img
           src={image ? URL.createObjectURL(image) : user.image || profileImage}
           alt=""
-          className="h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto"
+          className="h-9 md:h-14 w-9 max-md:mb-2 md:w-14 rounded-full mx-auto"
         />
         <input
           type="file"
@@ -37,7 +37,7 @@ const Sidebar = () => {
       </div>
 
       {image && (
-        <button className="ansolute top-0 ring-0 flex p-2 gap-1 bg-primary/10 text-primary cursor-pointer">Save <img src={assets.check_icon} width={13} alt="" onClick={updateImage} /></button>
+        <button className="absolute top-0 right-0 flex p-2 gap-1 bg-primary/10 text-primary cursor-pointer">Save <img src={assets.check_icon} width={13} alt="" onClick={updateImage} /></button>
       )}
 
       <p className="mt-2 text-base max-md:hidden">{user?.name}</p>
