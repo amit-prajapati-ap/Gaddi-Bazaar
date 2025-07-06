@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { CarDetails, Cars, Home, MyBookings } from './pages'
 import {ToastContainer} from 'react-toastify'
-import { Footer } from './components'
+import { Footer, Login } from './components'
 import { AddCar, Dashboard, Layout, ManageBookings, ManageCars } from './pages/owner/index'
 
 const App = () => {
@@ -11,6 +11,7 @@ const App = () => {
   const isOwnerPath = useLocation().pathname.startsWith('/owner')
   return (
     <>
+      {showLogin && <Login setShowLogin={setShowLogin}/>}
       {!isOwnerPath && <Navbar setShowLogin={setShowLogin}/>}
       <ToastContainer/>      
       <Routes>
