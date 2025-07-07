@@ -5,6 +5,7 @@ class ApiError {
         this.statusCode = statusCode
         this.data = null
         this.message = message
+        this.errorMessage = errors?.message
         this.errors = errors
     }
 }

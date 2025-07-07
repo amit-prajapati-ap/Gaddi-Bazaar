@@ -3,9 +3,6 @@ import jwt from 'jsonwebtoken';
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import bcrypt from 'bcryptjs'
-import {cookieName} from '../constants.js';
-
-const isProd = process.env.NODE_ENV === 'production'
 
 // Generate JWT token
 const generateToken = (userId) => {
@@ -17,6 +14,18 @@ const generateToken = (userId) => {
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+
+    if (!name?.trim() || !email?.trim() || !password?.trim()) {
+      return res.status(400).json(new ApiError(400, "Name, Email or Password is required"))
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json(new ApiError(400, "Password must be at least 6 characters long"))
+    }
+
+    if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) === false) {
+      return res.status(400).json(new ApiError(400, "Please enter a valid email"))
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -34,37 +43,33 @@ const register = async (req, res) => {
     // Generate token
     const token = generateToken(user._id);
 
-    res.cookie(cookieName, token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? "strict" : "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    }).status(200).json(new ApiResponse(200, user, "Registered Successfully"))
+    res.status(200).json(new ApiResponse(200, { token, user }, "Registered Successfully"))
   } catch (error) {
+    console.log(error)
     res.status(500).json(new ApiError(500, "Server error occured while registering the user", error))
   }
 }
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json(new ApiError(400, "Email and Password is required"))
-  }
 
   try {
+    const { email, password } = req.body;
+
+    if (!email?.trim() || !password?.trim()) {
+      return res.status(400).json(new ApiError(400, "Email and Password is required"))
+    }
 
     // Find user by email
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json(new ApiError(401, `Invalid email ID`))
+      return res.status(401).json(new ApiError(401, `User not found`))
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-      return res.status(401).json(new ApiError(401, `Invalid Password`))
+      return res.status(401).json(new ApiError(401, `Invalid Credentials`))
     }
 
     // Generate token
@@ -72,39 +77,21 @@ const login = async (req, res) => {
 
     user = await User.findById(user._id).select('-password')
 
-    res.cookie(cookieName, token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? "strict" : "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    }).status(200).json(new ApiResponse(200, user, "Login Successfully"))
+    res.status(200).json(new ApiResponse(200, { user, token }, "Login Successfully"))
   } catch (error) {
     console.log(error)
     res.status(500).json(new ApiError(500, "Server error occured while login the user", error))
   }
 }
 
-const getUser = async (req, res) => {
+const getUserData = async(req, res) => {
   try {
-    const userId = req.userId
-    const user = await User.findById(userId).select('-password')
-    res.status(200).json(new ApiResponse(200, user, "User Authenticated"))
+    const user = req.user
+    res.status(200).json(new ApiResponse(200, { user }, "User fetched successfully"))
   } catch (error) {
-    res.status(500).json(new ApiError(500, "Server error occured while checking the user authenticity", error))
+    console.log(error)
+    res.status(500).json(new ApiError(500, "Server error occured while fetching the user", error))
   }
 }
 
-const logout = async (_, res) => {
-  try {
-    res.cookie(cookieName, "", {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? "strict" : "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    }).status(200).json(new ApiResponse(200, [], "User Logout Successfully"))
-  } catch (error) {
-    res.status(500).json(new ApiError(500, "Server error occured while checking the user logout", error))
-  }
-}
-
-export { register, login, getUser, logout };
+export { register, login, getUserData };

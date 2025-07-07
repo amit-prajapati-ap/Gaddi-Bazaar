@@ -1,6 +1,6 @@
 import express from 'express'
+import { register, login, getUserData } from '../controllers/auth.controller.js';
 import { authenticate } from '../middleware/auth.middleware.js';
-import { register, login, getUser, logout } from '../controllers/auth.controller.js';
 
 const authRouter = express.Router()
 
@@ -10,8 +10,7 @@ authRouter.post('/register', register);
 // Login
 authRouter.post('/login', login);
 
-// Get current user
-authRouter.get('/me', authenticate, getUser);
-authRouter.get('/logout', authenticate, logout);
+// Get User
+authRouter.get('/me', authenticate, getUserData)
 
 export {authRouter};

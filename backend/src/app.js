@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import {authRouter} from './routes/auth.route.js';
 import cookieParser from 'cookie-parser'
+import { ownerRoute } from './routes/owner.route.js';
 
 const app = express()
 const allowedOrigins = [`${process.env.FRONTEND_URL}`, '*']
@@ -15,6 +16,7 @@ app.get('/', (_,res) => {
 })
 
 //API Endpoint 
-app.use('/api/auth', authRouter)
+app.use('/api/user', authRouter)
+app.use('/api/owner', ownerRoute)
 
 export default app
