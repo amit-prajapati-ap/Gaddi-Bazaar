@@ -1,21 +1,77 @@
 import React, { useEffect, useState } from 'react'
-import { assets, dummyCarData } from '../../assets/assets'
+import { assets } from '../../assets/assets'
 import { Loader } from '../../components'
 import { Title } from '../../components/owner'
+import { useAppContext } from '../../store/AppContext'
 
 const ManageCars = () => {
   const [cars, setCars] = useState(null)
-  const currency = import.meta.env.VITE_CURRENCY
+  const {axios, toast, currency, isOwner} = useAppContext()
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchOwnerCars = async() => {
-    setTimeout(() => {
-      setCars(dummyCarData)
-    }, 2000);
+    try {
+      const {data} = await axios.get('/api/owner/owner-cars')
+      if (data.success) {
+        setCars(data.data)
+        console.log(data)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    }
+  }
+
+  const toggleAvailability = async(carId) => {
+    
+    try {
+      if (isLoading) {
+        return null
+      }
+      setIsLoading(true)
+      const {data} = await axios.put('/api/owner/toggle-car', {carId})
+      if (data.success) {
+        toast.success(data.message)
+        fetchOwnerCars()
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const deleteCar = async(carId) => {
+    try {
+      const confirm = window.confirm("Are you sure you want to delete this car?")
+      if (!confirm) return null;
+      if (isLoading) {
+        return null
+      }
+      setIsLoading(true)
+      const {data} = await axios.post('/api/owner/delete-car', {carId})
+      if (data.success) {
+        toast.success(data.message)
+        fetchOwnerCars()
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
-    fetchOwnerCars()
-  }, [])
+    isOwner && fetchOwnerCars()
+  }, [isOwner])
 
   return (
     <div className='px-4 pt-10 md:px-10 w-full'>
@@ -26,6 +82,7 @@ const ManageCars = () => {
             <tr>
               <th className='p-3 font-medium'>Car</th>
               <th className='p-3 font-medium max-[830px]:hidden'>Category</th>
+              <th className='p-3 font-medium max-[950px]:hidden'>Location</th>
               <th className='p-3 font-medium pl-6'>Price</th>
               <th className='p-3 font-medium pl-7 max-[500px]:hidden'>Status</th>
               <th className='p-3 font-medium pl-7'>Actions</th>
@@ -42,13 +99,14 @@ const ManageCars = () => {
                   </div>
                 </td>
                 <td className='p-3 max-[830px]:hidden'>{car.category}</td>
+                <td className='p-3 max-[950px]:hidden'>{car.location}</td>
                 <td className='p-3'>{currency}{car.pricePerDay}/day</td>
                 <td className='p-3 max-[500px]:hidden'>
-                  <span className={`px-3 py-1 rounded-full text-xs ${car.isAvaliable ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}>{car.isAvaliable ? "Available" : "Unavailable"}</span>
+                  <span className={`px-3 py-1 rounded-full text-xs ${car.isAvailable ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}>{car.isAvailable ? "Available" : "Unavailable"}</span>
                 </td>
                 <td className='p-3 flex items-center'>
-                  <img src={car.isAvaliable ? assets.eye_close_icon : assets.eye_icon} alt="" className='cursor-pointer' />
-                  <img src={assets.delete_icon} alt="" className='cursor-pointer' />
+                  <img onClick={() => !isLoading && toggleAvailability(car._id)} src={car.isAvaliable ? assets.eye_close_icon : assets.eye_icon} alt="" className={`${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`} />
+                  <img onClick={() => !isLoading && deleteCar(car._id)} src={assets.delete_icon} alt="" className={`${isLoading ? "cursor-not-allowed" : "cursor-pointer"}`} />
                 </td>
               </tr>
             ))}

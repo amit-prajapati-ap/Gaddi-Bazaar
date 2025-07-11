@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Title } from "../../components/owner";
 import { assets } from "../../assets/assets";
+import { useAppContext } from "../../store/AppContext";
 
 const AddCar = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [car, setCar] = useState({
     brand: "",
@@ -16,10 +18,42 @@ const AddCar = () => {
     location: "",
     description: "",
   });
-  const currency = import.meta.env.VITE_CURRENCY;
+  const { axios, toast, currency } = useAppContext();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if (isLoading) return null;
+
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("carData", JSON.stringify(car));
+      const { data } = await axios.post("api/owner/add-car", formData);
+
+      if (data.success) {
+        toast.success(data.message);
+        setImage(null);
+        setCar({
+          brand: "",
+          model: "",
+          year: 0,
+          pricePerDay: 0,
+          category: "",
+          transmission: "",
+          fuel_type: "",
+          seating_capacity: 0,
+          location: "",
+          description: "",
+        });
+      } else {
+        toast.error(toast.message)
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -33,7 +67,7 @@ const AddCar = () => {
       <form
         onSubmit={onSubmitHandler}
         className="flex flex-col gap-5 text-gray-500 text-sm mt-6 max-w-xl"
-       >
+      >
         {/* Car Image  */}
         <div className="flex items-center gap-2 w-full">
           <label htmlFor="car-image">
@@ -169,8 +203,8 @@ const AddCar = () => {
           <div className="flex flex-col w-full">
             <label>Location</label>
             <select
-              onChange={(e) => setCar({ ...car, fuel_type: e.target.value })}
-              value={car.fuel_type}
+              onChange={(e) => setCar({ ...car, location: e.target.value })}
+              value={car.location}
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
             >
               <option value="">Select a Location</option>
@@ -200,9 +234,12 @@ const AddCar = () => {
           ></textarea>
         </div>
 
-        <button className="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-md mt-4 font-medium w-max cursor-pointer">
+        <button
+          className={`flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-md mt-4 font-medium w-max ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+          disabled={isLoading}
+        >
           <img src={assets.tick_icon} alt="" />
-          <span>Add Car</span>
+          <span>{isLoading ? "Adding..." : "Add Car"}</span>
         </button>
       </form>
     </div>

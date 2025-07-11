@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useAppContext } from "../store/AppContext";
+import { RxCross2 } from 'react-icons/rx';
 
-const Login = ({ setShowLogin }) => {
+const Login = () => {
+  const {setShowLogin, login, register, toast} = useAppContext()
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,6 +12,15 @@ const Login = ({ setShowLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (type === "Log in") {
+      login({email, password});
+    } else {
+      if (password === confirmPassword) {
+        register({email, password, name});        
+      } else {
+        toast.error("Passwords do not match");
+      }
+    }
   };
 
   useEffect(() => {
@@ -27,9 +39,12 @@ const Login = ({ setShowLogin }) => {
         onClick={(e) => e.stopPropagation()}
         className="bg-white text-gray-500 max-w-96 mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10"
       >
-        <h2 className="text-2xl font-semibold mb-2 text-center text-gray-700">
+        <div className="relative">
+          <h2 className="text-2xl font-semibold mb-2 text-center text-gray-700">
           {type === "Log in" ? <div><span className="text-primary">Welcome</span> back</div> : <div><span className="text-primary">Create</span>  an account</div>}
         </h2>
+        <RxCross2 className="absolute right-0 top-0.5 text-black/70 cursor-pointer" size={24} onClick={() => setShowLogin(false)}/>
+        </div>
         <form onSubmit={handleSubmit}>
           {type === "Sign up" && (
             <input
@@ -59,6 +74,7 @@ const Login = ({ setShowLogin }) => {
             type="password"
             placeholder="Enter your password"
             required
+            min={6}
           />
           {type === "Sign up" && (
             <input
@@ -69,6 +85,7 @@ const Login = ({ setShowLogin }) => {
               type="password"
               placeholder="Enter your confirm password"
               required
+              min={6}
             />
           )}
           {type === "Log in" && (
@@ -85,7 +102,7 @@ const Login = ({ setShowLogin }) => {
             {type}
           </button>
         </form>
-        <p className="text-center mt-4 flex items-center justify-center gap-1">
+        <div className="text-center mt-4 flex items-center justify-center gap-1">
           {type === "Log in" ? "Don’t have an account" : "Already registered"}?{" "}
           <p
             onClick={() => {
@@ -96,7 +113,7 @@ const Login = ({ setShowLogin }) => {
           >
             {type === "Log in" ? "Signup" : "Login"}
           </p>
-        </p>
+        </div>
         <div className="flex flex-col gap-3">
           <button
             type="button"

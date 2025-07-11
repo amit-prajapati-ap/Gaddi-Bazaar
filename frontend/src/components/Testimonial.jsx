@@ -99,7 +99,7 @@ const Testimonial = () => {
                   </svg>
                 </div>
 
-                <div class="flex gap-1 mb-4">
+                <div className="flex gap-1 mb-4">
                   <svg
                     width="16"
                     height="15"

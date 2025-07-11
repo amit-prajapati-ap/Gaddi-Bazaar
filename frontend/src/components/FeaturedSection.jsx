@@ -2,20 +2,11 @@ import React, { useEffect, useState } from 'react'
 import {CarCard, Loader, Title} from './index'
 import { assets, dummyCarData } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { useAppContext } from '../store/AppContext'
 
 const FeaturedSection = () => {
   const navigate = useNavigate()
-  const [cars, setCars] = useState(null);
-  
-    const fetchCars = async () => {
-      setTimeout(() => {
-        setCars(dummyCarData);
-      }, 2000);
-    };
-  
-    useEffect(() => {
-      fetchCars();
-    }, []);
+  const {cars} = useAppContext()
   return (
     <div className='flex flex-col items-center py-24 px-6 md:px-16 lg:px-24 xl:px-32 max-w-window mx-auto'>
       <div>
@@ -24,7 +15,7 @@ const FeaturedSection = () => {
 
       {cars ? (
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18'>
-        {dummyCarData.slice(0, 6).map(car => (
+        {cars.slice(0, 6).map(car => (
             <div key={car._id}>
                 <CarCard car={car} />
             </div>

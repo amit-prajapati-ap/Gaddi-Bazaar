@@ -3,13 +3,14 @@ import { ApiError } from '../utils/ApiError.js';
 import { User } from '../models/User.model.js';
 
 export const authenticate = async (req, res, next) => {
-  const token = req.headers.authorization
+  let token = req.headers.authorization
   
   if (!token) {
     return res.status(401).json(new ApiError(401, "Not Authorized. Please Login"))
   }
 
   try {
+    token = token.split(' ')[1]
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET)
 
     if (tokenDecode.userId) {

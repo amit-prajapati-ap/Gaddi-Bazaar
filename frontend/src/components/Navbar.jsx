@@ -1,11 +1,26 @@
 import React, { useState } from 'react'
 import {assets, menuLinks} from '../assets/assets'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
+import { useAppContext } from '../store/AppContext'
+import toast from 'react-hot-toast'
 
-const Navbar = ({setShowLogin}) => {
+const Navbar = () => {
+  const {setShowLogin, isOwner, user, logout, axios, setIsOwner} = useAppContext()
     const location = useLocation()
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
+
+    const changeRole = async () => {
+      try {
+        const {data} = await axios.put('/api/owner/role')
+        if (data.success) {
+          setIsOwner(true)
+          toast.success(data.message)
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
+    }
 
   return (
     <div className={`${location.pathname === '/' && 'bg-white'} max-w-window mx-auto flex items-center justify-between px-6 md:px-12 lg:px-16 xl:px-24 text-gray-600 border-b border-borderColor relative transition-all`}>
@@ -27,8 +42,8 @@ const Navbar = ({setShowLogin}) => {
         </div>
 
         <div className='flex max-sm:flex-col items-start sm:items-center gap-6'>
-          <button onClick={() => navigate('/owner')} className='cursor-pointer mx-auto group relative hover:text-[#8245ec] transition duration-200'>Dashboard <div className="h-[2px] bg-[#8245ec] absolute bottom-[-1] left-0 w-0 transition-all duration-300 group-hover:w-full"></div></button>
-          <button onClick={() => setShowLogin(true)} className='cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg'>Login</button>
+          <button onClick={() => {isOwner ? navigate('/owner') : changeRole()}} className='cursor-pointer mx-auto group relative hover:text-[#8245ec] transition duration-200'>{isOwner ? "Dashboard" : "List cars"} <div className="h-[2px] bg-[#8245ec] absolute bottom-[-1] left-0 w-0 transition-all duration-300 group-hover:w-full"></div></button>
+          <button onClick={() => {user ? logout() : setShowLogin(true)}} className='cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition-all text-white rounded-lg'>{user ? "Logout" : "Login"}</button>
         </div>
       </div>
 

@@ -1,16 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { dummyMyBookingsData } from '../../assets/assets';
 import { Loader } from '../../components';
 import { Title } from '../../components/owner';
+import { useAppContext } from '../../store/AppContext';
 
 const ManageBookings = () => {
   const [bookings, setBookings] = useState(null)
-  const currency = import.meta.env.VITE_CURRENCY
+  const {currency, axios, toast} = useAppContext()
 
   const fetchOwnerBookings = async() => {
-    setTimeout(() => {
-      setBookings(dummyMyBookingsData)
-    }, 2000);
+    try {
+      const {data} = await axios.get('/api/booking/owner-bookings')
+      if (data.success) {
+        setBookings(data.data)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    }
+  }
+
+  const changeBookingStatus = async(bookingId, status) => {
+    try {
+      const {data} = await axios.put('/api/booking/change-status', {bookingId, status})
+      if (data.success) {
+        toast.success(data.message)
+        fetchOwnerBookings()
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    }
   }
 
   useEffect(() => {
@@ -47,7 +70,7 @@ const ManageBookings = () => {
                 </td>
                 <td className='p-3 flex items-center'>
                   {booking.status === "pending" ? (
-                    <select value={booking.status} className='px-2 py-1.5 mt-1 text-gray-500 border border-borderColor rounded-md outline-none'>
+                    <select onChange={(e) => changeBookingStatus(booking._id, e.target.value)} value={booking.status} className='px-2 py-1.5 mt-1 text-gray-500 border border-borderColor rounded-md outline-none'>
                       <option value="pending">Pending</option>
                       <option value="Cancelled">Cancelled</option>
                       <option value="Confirmed">Confirmed</option>

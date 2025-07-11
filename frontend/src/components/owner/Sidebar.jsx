@@ -1,16 +1,35 @@
 import React, { useState } from "react";
-import { assets, dummyUserData, ownerMenuLinks } from "../../assets/assets";
+import { assets, ownerMenuLinks } from "../../assets/assets";
 import { NavLink, useLocation } from "react-router-dom";
 import profileImage from "../../assets/profile.png";
+import { useAppContext } from "../../store/AppContext";
 
 const Sidebar = () => {
-  const user = dummyUserData;
+  const {user, axios, toast, fetchUser} = useAppContext()
   const location = useLocation();
   const [image, setImage] = useState("");
+  const [saving, setSaving] = useState(false)
 
   const updateImage = async () => {
-    user.image = URL.createObjectURL(image);
-    setImage("");
+    try {
+      setSaving(true)
+      const formData = new FormData();
+      formData.append("image", image);
+      const {data} = await axios.put('/api/owner/update-image', formData)
+
+      if (data.success) {
+        toast.success(data.message)
+        setImage("")
+        fetchUser()
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    } finally {
+      setSaving(false)
+    }
   };
 
   return (
@@ -18,7 +37,7 @@ const Sidebar = () => {
       <div className="group relative">
         <label htmlFor="image">
         <img
-          src={image ? URL.createObjectURL(image) : user.image || profileImage}
+          src={image ? URL.createObjectURL(image) : user?.image || profileImage}
           alt=""
           className="h-9 md:h-14 w-9 max-md:mb-2 md:w-14 rounded-full mx-auto"
         />
@@ -28,6 +47,7 @@ const Sidebar = () => {
           hidden
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
+          disabled={saving}
         />
 
         <div className="absolute hidden top-0 left-0 right-0 bottom-0 border-0 bg-black/10 rounded-full group-hover:flex items-center justify-center cursor-pointer">
@@ -37,7 +57,7 @@ const Sidebar = () => {
       </div>
 
       {image && (
-        <button className="absolute top-0 right-0 flex p-2 gap-1 bg-primary/10 text-primary cursor-pointer">Save <img src={assets.check_icon} width={13} alt="" onClick={updateImage} /></button>
+        <button onClick={updateImage} className="absolute top-0 right-0 flex p-2 gap-1 bg-primary/10 text-primary cursor-pointer" disabled={saving}>{saving ? "Saving..." : "Save"} <img src={assets.check_icon} width={13} alt="" /></button>
       )}
 
       <p className="mt-2 text-base max-md:hidden">{user?.name}</p>

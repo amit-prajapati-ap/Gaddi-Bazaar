@@ -60,6 +60,15 @@ const getOwnerCars = async (req, res) => {
   }
 }
 
+const getUserCars = async (_, res) => {
+  try {
+    const cars = await Car.find({ isAvailable: true })
+    res.status(200).json(new ApiResponse(200, cars, "All Cars fetched successfully"))
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(new ApiError(500, "Server error occured while fetching cars", error))
+  }
+}
 
 const toggleCarAvailability = async (req, res) => {
   try {
@@ -155,11 +164,11 @@ const updateUserImage = async (req, res) => {
     const image = optimizedImageUrl
 
     await User.findByIdAndUpdate(_id, { image })
-    res.status(200).json(new ApiResponse(200, "", "Image updated successfully"))
+    res.status(200).json(new ApiResponse(200, "", "Profile image updated successfully"))
   } catch (error) {
     console.log(error)
     res.status(500).json(new ApiError(500, "Server error occured while updating user image", error))
   }
 }
 
-export { changeRoleToOwner, addCar, getOwnerCars, toggleCarAvailability, deleteCar, getDashboardData,updateUserImage };
+export { changeRoleToOwner, addCar, getOwnerCars, toggleCarAvailability, deleteCar, getDashboardData,updateUserImage, getUserCars };

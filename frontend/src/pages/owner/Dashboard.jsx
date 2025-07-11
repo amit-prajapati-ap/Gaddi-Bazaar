@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { assets, dummyDashboardData } from '../../assets/assets'
+import { assets } from '../../assets/assets'
 import { Title } from '../../components/owner'
 import { Loader } from '../../components'
+import { useAppContext } from '../../store/AppContext'
 
 const Dashboard = () => {
   const [data, setData] = useState({
@@ -12,8 +13,9 @@ const Dashboard = () => {
     recentBookings: [],
     monthlyRevenue: 0
   })
+
+  const {axios, isOwner, currency, toast} = useAppContext()
   const [dataFetched, setDataFetched] = useState(false)
-  const currency = import.meta.env.VITE_CURRENCY
 
   const dashboardCard = [
     {
@@ -38,16 +40,28 @@ const Dashboard = () => {
     },
   ]
 
-  const fetchDashboardData = () => {
-    setTimeout(() => {
-      setData(dummyDashboardData)
-      setDataFetched(true)
-    }, 2000);
+  const fetchDashboardData = async () => {
+    try {
+      const {data} = await axios.get('/api/owner/dashboard')
+
+      if (data.success) {
+        setData(data.data)
+        setDataFetched(true)
+      } else {
+        setDataFetched(true)
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    }
   }
 
   useEffect(() => {
-    fetchDashboardData()
-  }, [])
+    if (isOwner) {
+      fetchDashboardData()
+    }
+  }, [isOwner])
 
   return (
     <div className='px-4 pt-10 md:px-10 flex-1'>

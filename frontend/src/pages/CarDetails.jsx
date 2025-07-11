@@ -2,22 +2,38 @@ import React, { useEffect, useState } from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
 import {assets, dummyCarData} from '../assets/assets'
 import {Loader} from '../components'
+import { useAppContext } from '../store/AppContext'
 
 const CarDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
-  const currency = import.meta.env.VITE_CURRENCY
+  const [isLoading, setIsLoading] = useState(false)
+  const {cars, axios, toast, currency, setPickupDate, setReturnDate, returnDate, pickupDate} = useAppContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    if(isLoading) return null
+    try {
+      setIsLoading(true)
+      const {data} = await axios.post('/api/booking/create-booking', {carId: id, pickupDate, returnDate})
+      if (data.success) {
+        toast.success(data.message)
+        navigate('/my-bookings')
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setCar(dummyCarData.find(car => car._id === id))
-    }, 2000);
-  }, [id])
+    cars && setCar(cars.find(car => car._id === id))
+  }, [id, cars])
   
   return car ? (
     <div className='px-6 mx-auto md:px-16 lg:px-24 xl:px-32 my-16 max-w-window'>
@@ -83,14 +99,14 @@ const CarDetails = () => {
 
           <div className='flex flex-col gap-2'>
             <label htmlFor="pickup-date">Pickup Date</label>
-            <input type="date" className='border border-borderColor px-3 py-2 rounded-lg cursor-pointer' required id="pickup-date" min={new Date().toISOString().split("T")[0]} />
+            <input onChange={(e) => setPickupDate(e.target.value)} value={pickupDate} type="date" className='border border-borderColor px-3 py-2 rounded-lg cursor-pointer' required id="pickup-date" min={new Date().toISOString().split("T")[0]} />
           </div>
           <div className='flex flex-col gap-2'>
             <label htmlFor="return-date">Return Date</label>
-            <input type="date" className='border border-borderColor px-3 py-2 rounded-lg cursor-pointer' required id="return-date" min={new Date().toISOString().split("T")[0]} />
+            <input onChange={(e) => setReturnDate(e.target.value)} value={returnDate} type="date" className='border border-borderColor px-3 py-2 rounded-lg cursor-pointer' required id="return-date" min={pickupDate ? pickupDate : new Date().toISOString().split("T")[0]} />
           </div>
 
-          <button className='w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl cursor-pointer'>Book Now</button>
+          <button className={`w-full bg-primary hover:bg-primary-dull transition-all py-3 font-medium text-white rounded-xl ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`} type='submit' disabled={isLoading}>{ isLoading ? "Loading..." : "Book Now"}</button>
 
           <p className='text-center text-sm'>No credit card required to reserve</p>
         </form>

@@ -14,31 +14,31 @@ const Newsletter = () => {
   }
   return (
     <div className="xl:px-24 md:px-12 px-6 my-10 mb-24 max-w-window mx-auto">
-      <div class="flex md:flex-row flex-col border border-gray-500/30 rounded-lg items-start md:items-center justify-between gap-5 text-sm max-w-5xl bg-white p-8 mx-auto">
-        <div class="max-w-md w-full">
-          <h1 class="text-3xl font-semibold text-gray-700">
+      <div className="flex md:flex-row flex-col border border-gray-500/30 rounded-lg items-start md:items-center justify-between gap-5 text-sm max-w-5xl bg-white p-8 mx-auto">
+        <div className="max-w-md w-full">
+          <h1 className="text-3xl font-semibold text-gray-700">
             Never Miss a Deal
           </h1>
-          <p class="text-gray-500 mt-2">
+          <p className="text-gray-500 mt-2">
             Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing
             velit quis. Duis tempor incididunt dolore.
           </p>
-          <div class="flex items-center gap-4 mt-10">
+          <div className="flex items-center gap-4 mt-10">
             <input
-              class="py-2 px-3 w-full outline-none focus:border-indigo-500/60 transition max-w-64 border border-gray-500/30 rounded-md"
+              className="py-2 px-3 w-full outline-none focus:border-indigo-500/60 transition max-w-64 border border-gray-500/30 rounded-md"
               type="text"
               placeholder="Enter you email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button onClick={handleSubscribe} class="bg-primary hover:bg-primary-dull transition-all px-6 py-2 cursor-pointer rounded text-white font-medium">
+            <button onClick={handleSubscribe} className="bg-primary hover:bg-primary-dull transition-all px-6 py-2 cursor-pointer rounded text-white font-medium">
               Subscribe
             </button>
           </div>
         </div>
-        <div class="space-y-4 md:max-w-48">
-          <div class="flex items-center gap-3">
-            <div class="bg-gray-500/10 w-max p-2.5 rounded">
+        <div className="space-y-4 md:max-w-48">
+          <div className="flex items-center gap-3">
+            <div className="bg-gray-500/10 w-max p-2.5 rounded">
               <svg
                 width="22"
                 height="22"
@@ -54,16 +54,16 @@ const Newsletter = () => {
                 />
               </svg>
             </div>
-            <h3 class="text-base font-medium text-gray-800">Weekly articles</h3>
+            <h3 className="text-base font-medium text-gray-800">Weekly articles</h3>
           </div>
-          <p class="text-gray-500">
+          <p className="text-gray-500">
             Non laboris consequat cupidatat laborum magna. Eiusmod non irure
             cupidatat duis commodo amet.
           </p>
         </div>
-        <div class="space-y-4 md:max-w-48">
-          <div class="flex items-center gap-3">
-            <div class="bg-gray-500/10 w-max p-2.5 rounded">
+        <div className="space-y-4 md:max-w-48">
+          <div className="flex items-center gap-3">
+            <div className="bg-gray-500/10 w-max p-2.5 rounded">
               <svg
                 width="22"
                 height="22"
@@ -80,9 +80,9 @@ const Newsletter = () => {
                 />
               </svg>
             </div>
-            <h3 class="text-base font-medium text-gray-800">No spam</h3>
+            <h3 className="text-base font-medium text-gray-800">No spam</h3>
           </div>
-          <p class="text-gray-500">
+          <p className="text-gray-500">
             Officia excepteur ullamco ut sint duis proident non adipisicing.
             Voluptate incididunt anim.
           </p>
