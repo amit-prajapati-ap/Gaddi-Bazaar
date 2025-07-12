@@ -9,5 +9,7 @@ import Newsletter from './Newsletter'
 import Footer from './Footer'
 import Loader from './Loader'
 import Login from './Login'
+import PageNotFound from './PageNotFound'
+import ContactUs from './ContactUs'
 
-export { Navbar, Hero, CarCard, FeaturedSection, Title, Banner, Testimonial, Newsletter, Footer, Loader, Login };
+export { Navbar, Hero, CarCard, FeaturedSection, Title, Banner, Testimonial, Newsletter, Footer, Loader, Login, ContactUs, PageNotFound };

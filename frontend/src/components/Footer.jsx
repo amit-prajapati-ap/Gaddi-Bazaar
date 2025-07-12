@@ -18,7 +18,7 @@ const Footer = () => {
             name: 'Browse Cars'
         },
         {
-            url: '/list-car',
+            url: '/owner/add-car',
             name: 'List Your Car'
         },
         {

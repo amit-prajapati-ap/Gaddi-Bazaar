@@ -22,6 +22,9 @@ const addCar = async (req, res) => {
     const { _id } = req.user
     let car = JSON.parse(req.body.carData)
     const imageFile = req.file
+    if (!imageFile) {
+      return res.status(400).json(new ApiError(400, "Please upload an image"))
+    }
     const fileBuffer = fs.readFileSync(imageFile.path)
     const resposne = await imagekit.upload({
       file: fileBuffer,

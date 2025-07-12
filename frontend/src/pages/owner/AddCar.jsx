@@ -123,7 +123,7 @@ const AddCar = () => {
               required
               placeholder="2025"
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
-              value={car.year}
+              value={car.year > 0 ? car.year : ""}
               onChange={(e) => setCar({ ...car, year: e.target.value })}
             />
           </div>
@@ -134,7 +134,7 @@ const AddCar = () => {
               required
               placeholder="100"
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
-              value={car.pricePerDay}
+              value={car.pricePerDay > 0 ? car.pricePerDay : ""}
               onChange={(e) => setCar({ ...car, pricePerDay: e.target.value })}
             />
           </div>
@@ -165,7 +165,7 @@ const AddCar = () => {
               <option value="">Select a Transmission</option>
               <option value="Automatic">Automatic</option>
               <option value="Manual">Manual</option>
-              <option value="Semi-Automatic">Semi-Automatic</option>
+              <option value="Semi-Automatic">Semi-Auto</option>
             </select>
           </div>
           <div className="flex flex-col w-full">
@@ -190,7 +190,7 @@ const AddCar = () => {
               required
               placeholder="4"
               className="px-3 py-2 mt-1 border border-borderColor rounded-md outline-none"
-              value={car.seating_capacity}
+              value={car.seating_capacity > 0 ? car.seating_capacity : ""}
               onChange={(e) =>
                 setCar({ ...car, seating_capacity: e.target.value })
               }

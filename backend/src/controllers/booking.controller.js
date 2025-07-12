@@ -98,7 +98,7 @@ const changeBookingStatus = async (req, res) => {
             return res.status(400).json(new ApiError(400, "You are not authorized to update this booking"))
         }
 
-        booking.status = status
+        booking.status = status.toLowerCase()
         await booking.save()
 
         res.status(200).json(new ApiResponse(200, "", "Booking status updated successfully"))

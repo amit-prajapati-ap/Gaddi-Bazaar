@@ -7,9 +7,9 @@ import { useAppContext } from "../store/AppContext";
 const Cars = () => {
   const [input, setInput] = useState("");
   const [searchParams] = useSearchParams()
-  const pickupLocation = searchParams.get('pickupLocation')
-  const pickupDate = searchParams.get('pickupDate') 
-  const returnDate = searchParams.get('returnDate')
+  const pickupLocation = searchParams.get('pickuplocation')
+  const pickupDate = searchParams.get('pickupdate') 
+  const returnDate = searchParams.get('returndate')
   const {cars, axios, toast} = useAppContext();
 
   const isSearchData = pickupLocation && pickupDate && returnDate
@@ -27,9 +27,9 @@ const Cars = () => {
     setFilteredCars(filtered)
   }
 
-  const searchCarAvailability = () => {
+  const searchCarAvailability = async () => {
     try {
-      const {data} = axios.post(`/api/booking/check-availability`, {location: pickupLocation, pickupDate, returnDate})
+      const {data} = await axios.post(`/api/booking/check-availability`, {location: pickupLocation, pickupDate, returnDate})
       if (data.success) {
         setFilteredCars(data.data)
         if (data.data.length === 0) {
@@ -79,7 +79,7 @@ const Cars = () => {
           />
         </div>
       </div>
-      {cars ? (
+      {cars && cars.length > 0 ? (
         <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-10  max-w-7xl mx-auto">
         <p className="text-gray-500 xl:px-20 max-w-7xl mx-auto">
           Showing {filteredCars.length} Cars

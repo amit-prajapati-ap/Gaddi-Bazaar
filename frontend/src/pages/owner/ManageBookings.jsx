@@ -51,7 +51,7 @@ const ManageBookings = () => {
               <th className='p-3 font-medium max-[830px]:hidden'>Date Range</th>
               <th className='p-3 font-medium'>Total</th>
               <th className='p-3 font-medium max-[490px]:hidden'>Payment</th>
-              <th className='p-3 font-medium pl-7'>Actions</th>
+              <th className='p-3 font-medium pl-4'>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -68,9 +68,9 @@ const ManageBookings = () => {
                 <td className='p-3 max-[490px]:hidden'>
                   <span className='bg-gray-100 px-3 py-1 rounded-full text-xs'>offline</span>
                 </td>
-                <td className='p-3 flex items-center'>
+                <td className='p-3'>
                   {booking.status === "pending" ? (
-                    <select onChange={(e) => changeBookingStatus(booking._id, e.target.value)} value={booking.status} className='px-2 py-1.5 mt-1 text-gray-500 border border-borderColor rounded-md outline-none'>
+                    <select onChange={(e) => changeBookingStatus(booking._id, e.target.value)} value={booking.status} className='px-2 py-1.5 text-gray-500 border border-borderColor rounded-md outline-none'>
                       <option value="pending">Pending</option>
                       <option value="Cancelled">Cancelled</option>
                       <option value="Confirmed">Confirmed</option>

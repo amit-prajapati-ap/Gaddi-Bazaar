@@ -26,7 +26,7 @@ const MyBookings = () => {
   }, [user])
 
   return (
-    <div className='px-6 md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-window mx-auto'>
+    <div className='px-6 min-h-screen md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-window mx-auto'>
       <Title title={"My Bookings"} subTitle={"Explore our selection of premium vehicles available for your next adventure."} align={'left'}/>
 
       {bookings ? (

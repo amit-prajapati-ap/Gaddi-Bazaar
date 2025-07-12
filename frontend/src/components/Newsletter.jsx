@@ -30,6 +30,7 @@ const Newsletter = () => {
               placeholder="Enter you email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
             <button onClick={handleSubscribe} className="bg-primary hover:bg-primary-dull transition-all px-6 py-2 cursor-pointer rounded text-white font-medium">
               Subscribe
