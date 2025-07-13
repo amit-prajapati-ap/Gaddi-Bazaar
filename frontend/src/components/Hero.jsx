@@ -26,14 +26,14 @@ const Hero = () => {
             </div>
             <div>
                 <label htmlFor="pickup-date">Pick-up Date</label>
-                <input value={pickupDate} placeholder='mm-dd-yyyy' onChange={(e) => setPickupDate(e.target.value)} type="date" id='pickup-date' min={new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer text-gray-500 border rounded-sm border-gray-200 px-2' required />
+                <input value={pickupDate} placeholder='mm-dd-yyyy' onChange={(e) => setPickupDate(e.target.value)} type="date" id='pickup-date' min={new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer text-gray-500 border rounded-sm border-gray-200 px-2 max-md:ml-2' required />
             </div>
             <div>
                 <label htmlFor="return-date">Return Date</label>
-                <input value={returnDate} onChange={(e) => setReturnDate(e.target.value)} placeholder='mm-dd-yyyy' type="date" id='return-date' min={pickupDate ? pickupDate : new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer border rounded-sm border-gray-200 px-2 text-gray-500' required />
+                <input value={returnDate} onChange={(e) => setReturnDate(e.target.value)} placeholder='mm-dd-yyyy' type="date" id='return-date' min={pickupDate ? pickupDate : new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer border rounded-sm border-gray-200 px-2 text-gray-500 max-md:ml-3.5' required />
             </div>
         </div>
-            <motion.button whileHover={{scale: 1.05}} whileTap={{scale: 0.95}} className='flex items-center justify-center gap-1 px-9 py-3 max-sm:mt-4 bg-primary hover:bg-primary-dull text-white rounded-full cursor-pointer'><img src={assets.search_icon} alt="search" className='brightness-300' />Search</motion.button>
+            <motion.button whileHover={{scale: 1.05}} whileTap={{scale: 0.95}} className='flex items-center justify-center gap-1 px-9 py-3 max-md:mt-4 bg-primary hover:bg-primary-dull text-white rounded-full cursor-pointer'><img src={assets.search_icon} alt="search" className='brightness-300' />Search</motion.button>
       </motion.form>
 
       <motion.img initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: 0.8, delay: 0.6}} src={assets.main_car} alt="car" className='max-h-72' />

@@ -20,7 +20,7 @@ const ContactUs = () => {
   return (
     <section
       id="contact"
-      className="px-[7vw] py-8 sm:py-24 sm:pb-24 max-w-[1900px] mx-auto font-sans relative text-white"
+      className="px-[7vw] py-8 sm:py-24 sm:pb-24 max-w-[1900px] mx-auto font-sans relative text-white min-h-[70vh]"
     >
       {/* Section Title  */}
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }} className="text-center mb-12">

@@ -55,7 +55,7 @@ const Cars = () => {
   
 
   return (
-    <div className="max-w-window mx-auto mb-20 min-h-[70vh]">
+    <div className="max-w-window mx-auto mb-20 mt-14 min-h-[70vh]">
       <motion.div initial={{y: 30, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6, ease: "easeOut"}} className="flex flex-col items-center py-20 bg-light max-md:px-4">
         <Title
           title={"Browse Cars"}

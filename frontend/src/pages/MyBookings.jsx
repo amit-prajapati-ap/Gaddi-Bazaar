@@ -33,7 +33,7 @@ const MyBookings = () => {
   }, [user])
 
   return (
-    <motion.div initial={{y: 30, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6}} className='px-6 min-h-[70vh] md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-window mx-auto'>
+    <motion.div initial={{y: 30, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6}} className='px-6 min-h-[70vh] md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-32 text-sm max-w-window mx-auto'>
       <Title title={"My Bookings"} subTitle={"Explore our selection of premium vehicles available for your next adventure."} align={'left'}/>
 
       {bookings ? (

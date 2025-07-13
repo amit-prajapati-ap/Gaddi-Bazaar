@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { CarDetails, Cars, Home, MyBookings } from './pages'
@@ -11,6 +11,7 @@ import { useAppContext } from './store/AppContext'
 const App = () => {
   const {showLogin} = useAppContext()
   const isOwnerPath = useLocation().pathname.startsWith('/owner')
+  
   return (
     <>
     <Toaster/>
