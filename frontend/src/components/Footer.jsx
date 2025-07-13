@@ -2,6 +2,7 @@ import React from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaTwitter, FaUser } from 'react-icons/fa'
+import {motion} from 'motion/react'
 
 const Footer = () => {
     const navigate = useNavigate()
@@ -75,22 +76,21 @@ const Footer = () => {
     },
   ];
   return (
-    <div className="px-6 md:px-16 lg:px-24 xl:px-32 max-w-window mx-auto border-t border-gray-500/60">
-      <div className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-gray-500/30 text-gray-500">
+    <motion.div initial={{y: 30, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6}} className="px-6 md:px-16 lg:px-24 xl:px-32 max-w-window mx-auto border-t border-gray-500/60">
+      <motion.div initial={{y: 20, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6, delay: 0.2}} className="flex flex-col md:flex-row items-start justify-between gap-10 py-10 border-b border-gray-500/30 text-gray-500">
         <div>
-          <img onClick={() => {navigate('/') ; scrollTo(0, 0)}}
+          <motion.img initial={{opacity: 0}} whileInView={{ opacity: 1}} transition={{duration: 0.5, delay: 0.3}} onClick={() => {navigate('/') ; scrollTo(0, 0)}}
             className="w-34 md:w-42 cursor-pointer"
             src={assets.logo}
             alt="logo"
           />
-          <p className="max-w-[410px] mt-2">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum unde
-            quaerat eveniet cumque accusamus atque qui error quo enim fugiat?
-          </p>
+          <motion.p initial={{opacity: 0}} whileInView={{ opacity: 1}} transition={{duration: 0.5, delay: 0.4}} className="max-w-[410px] mt-2">
+            Car rental service with a wide selection of luxury and everyday vehicles for all your driving needs.
+          </motion.p>
         </div>
-        <div className="flex max-md:flex-wrap lg:justify-around w-full xl:w-[45%] gap-20 md:gap-5">
+        <motion.div initial={{opacity: 0, y: 20}} whileInView={{ opacity: 1, y: 0}} transition={{duration: 0.6, delay: 0.4}} className="flex max-md:flex-wrap lg:justify-around w-full xl:w-[45%] gap-20 md:gap-5">
           {linkSections.map((section, index) => (
-            <div key={index}>
+            <motion.div initial={{opacity: 0, y: 20}} whileInView={{ opacity: 1, y: 0}} transition={{duration: 0.6, delay: index * 0.3}} key={index}>
               <h3 className="font-semibold text-base text-gray-900 md:mb-5 mb-2">
                 {section.title}
               </h3>
@@ -108,14 +108,14 @@ const Footer = () => {
                   </a>
                 ))}
               </ul>}
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
-      <p className="py-4 text-center text-sm md:text-base text-gray-500/80">
+        </motion.div>
+      </motion.div>
+      <motion.p initial={{opacity: 0}} whileInView={{opacity: 1}} transition={{duration: 0.6, delay: 0.4}} className="py-4 text-center text-sm md:text-base text-gray-500/80">
         Copyright 2025 © GaddiBazaar All Right Reserved.
-      </p>
-    </div>
+      </motion.p>
+    </motion.div>
   );
 };
 

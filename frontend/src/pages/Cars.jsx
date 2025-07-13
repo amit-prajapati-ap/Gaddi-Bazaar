@@ -3,6 +3,7 @@ import { CarCard, Loader, Title } from "../components";
 import { assets } from "../assets/assets";
 import { useSearchParams } from "react-router-dom";
 import { useAppContext } from "../store/AppContext";
+import { motion } from "motion/react";
 
 const Cars = () => {
   const [input, setInput] = useState("");
@@ -54,8 +55,8 @@ const Cars = () => {
   
 
   return (
-    <div className="max-w-window mx-auto mb-20">
-      <div className="flex flex-col items-center py-20 bg-light max-md:px-4">
+    <div className="max-w-window mx-auto mb-20 min-h-[70vh]">
+      <motion.div initial={{y: 30, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6, ease: "easeOut"}} className="flex flex-col items-center py-20 bg-light max-md:px-4">
         <Title
           title={"Browse Cars"}
           subTitle={
@@ -63,7 +64,7 @@ const Cars = () => {
           }
         />
 
-        <div className="flex items-center bg-white px-4 mt-6 w-full h-12 rounded-full shadow max-w-140">
+        <motion.div whileHover={{ scale: 1.05 }} transition={{duration: 0.3}} className="flex items-center bg-white px-4 mt-6 w-full h-12 rounded-full shadow max-w-140">
           <img src={assets.search_icon} alt="" className="w-4.5 h-4.5 mr-2" />
           <input
             type="text"
@@ -77,22 +78,22 @@ const Cars = () => {
             alt=""
             className="w-4.5 h-4.5 mr-2 cursor-pointer"
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       {cars && cars.length > 0 ? (
-        <div className="px-6 md:px-16 lg:px-24 xl:px-32 mt-10  max-w-7xl mx-auto">
+        <motion.div initial={{opacity: 0}} whileInView={{ opacity: 1}} transition={{duration: 0.5, delay: 0.6}} className="px-6 md:px-16 lg:px-24 xl:px-32 mt-10  max-w-7xl mx-auto">
         <p className="text-gray-500 xl:px-20 max-w-7xl mx-auto">
           Showing {filteredCars.length} Cars
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4 xl:px-20">
-          {filteredCars.map((car) => (
-            <div key={car._id}>
+          {filteredCars.map((car, index) => (
+            <motion.div initial={{opacity: 0, y: 20}} whileInView={{y: 0, opacity: 1}} transition={{delay: 0.3*index, duration: 0.4}} key={car._id}>
               <CarCard car={car} />
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
       ) : <Loader/>}
     </div>
   );

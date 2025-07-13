@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Title from "./Title";
+import {motion} from 'motion/react'
 
 const Testimonial = () => {
   const [tooltip, setTooltip] = useState({
@@ -61,7 +62,9 @@ const Testimonial = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18 px-24">
         {testimonials.map((testimonial, index) => (
-          <div
+          <motion.div 
+            initial={{opacity: 0, y: 40}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6, delay: index * 0.2, ease: "easeOut"}}
+            viewport={{once: true, amount: 0.3}}
             key={index}
             ref={(el) => (cardRefs.current[index] = el)}
             onMouseMove={(e) => handleMouseMove(e, index)}
@@ -177,7 +180,7 @@ const Testimonial = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

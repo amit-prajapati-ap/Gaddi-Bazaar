@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {toast} from 'react-toastify'
+import { motion } from "motion/react";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("")
@@ -13,17 +14,17 @@ const Newsletter = () => {
     }
   }
   return (
-    <div className="xl:px-24 md:px-12 px-6 my-10 mb-24 max-w-window mx-auto">
+    <motion.div initial={{y: 30, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6, ease: "easeOut"}} viewport={{once: true, amount: 0.3}} className="xl:px-24 md:px-12 px-6 my-10 mb-24 max-w-window mx-auto">
       <div className="flex md:flex-row flex-col border border-gray-500/30 rounded-lg items-start md:items-center justify-between gap-5 text-sm max-w-5xl bg-white p-8 mx-auto">
         <div className="max-w-md w-full">
-          <h1 className="text-3xl font-semibold text-gray-700">
+          <motion.h1 initial={{y: 20, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6, delay: 0.2}} className="text-3xl font-semibold text-gray-700">
             Never Miss a Deal
-          </h1>
-          <p className="text-gray-500 mt-2">
+          </motion.h1>
+          <motion.p initial={{y: 20, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.5, delay: 0.3}} className="text-gray-500 mt-2">
             Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing
             velit quis. Duis tempor incididunt dolore.
-          </p>
-          <div className="flex items-center gap-4 mt-10">
+          </motion.p>
+          <motion.form initial={{y: 20, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.5, delay: 0.4}} className="flex items-center gap-4 mt-10">
             <input
               className="py-2 px-3 w-full outline-none focus:border-indigo-500/60 transition max-w-64 border border-gray-500/30 rounded-md"
               type="text"
@@ -35,9 +36,9 @@ const Newsletter = () => {
             <button onClick={handleSubscribe} className="bg-primary hover:bg-primary-dull transition-all px-6 py-2 cursor-pointer rounded text-white font-medium">
               Subscribe
             </button>
-          </div>
+          </motion.form>
         </div>
-        <div className="space-y-4 md:max-w-48">
+        <motion.div initial={{y: 20, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.5, delay: 0.5}} className="space-y-4 md:max-w-48">
           <div className="flex items-center gap-3">
             <div className="bg-gray-500/10 w-max p-2.5 rounded">
               <svg
@@ -61,8 +62,8 @@ const Newsletter = () => {
             Non laboris consequat cupidatat laborum magna. Eiusmod non irure
             cupidatat duis commodo amet.
           </p>
-        </div>
-        <div className="space-y-4 md:max-w-48">
+        </motion.div>
+        <motion.div initial={{y: 20, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.5, delay: 0.6}} className="space-y-4 md:max-w-48">
           <div className="flex items-center gap-3">
             <div className="bg-gray-500/10 w-max p-2.5 rounded">
               <svg
@@ -87,9 +88,9 @@ const Newsletter = () => {
             Officia excepteur ullamco ut sint duis proident non adipisicing.
             Voluptate incididunt anim.
           </p>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

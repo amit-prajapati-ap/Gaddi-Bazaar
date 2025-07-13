@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {assets, dummyMyBookingsData} from '../assets/assets'
 import { Loader, Title } from '../components'
 import { useAppContext } from '../store/AppContext'
+import { motion } from 'motion/react'
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState(null)
@@ -26,13 +27,13 @@ const MyBookings = () => {
   }, [user])
 
   return (
-    <div className='px-6 min-h-screen md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-window mx-auto'>
+    <motion.div initial={{y: 30, opacity: 0}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6}} className='px-6 min-h-[70vh] md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-window mx-auto'>
       <Title title={"My Bookings"} subTitle={"Explore our selection of premium vehicles available for your next adventure."} align={'left'}/>
 
       {bookings ? (
         <div>
         {bookings.map((booking, index) => (
-          <div key={index} className='grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12 last:mb-32'>
+          <motion.div initial={{opacity: 0, y: 20}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.4, delay: index * 0.3}} key={index} className='grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12 last:mb-32'>
 
             {/* Car Image + Info  */}
             <div className='md:col-span-1'>
@@ -76,11 +77,11 @@ const MyBookings = () => {
                 <p>Booked on {booking.createdAt.split('T')[0]}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       ) : <Loader/>}
-    </div>
+    </motion.div>
   )
 }
 
