@@ -6,7 +6,7 @@ import { motion } from 'motion/react'
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState(null)
-  const {currency, axios, toast, user} = useAppContext()
+  const {currency, axios, toast, user, navigate, setShowLogin} = useAppContext()
 
   const fetcMyBookings = async () => {
     try {
@@ -23,7 +23,13 @@ const MyBookings = () => {
   }
   
   useEffect(() => {
-    user && fetcMyBookings()
+    if (user) {
+      fetcMyBookings()
+    } else {
+      toast.error("Please login to view your bookings")
+      navigate('/')
+      setShowLogin(true)
+    }
   }, [user])
 
   return (
