@@ -60,7 +60,7 @@ const Testimonial = () => {
         }
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18 px-24">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-18 md:px-24 px-4">
         {testimonials.map((testimonial, index) => (
           <motion.div 
             initial={{opacity: 0, y: 40}} whileInView={{y: 0, opacity: 1}} transition={{duration: 0.6, delay: index * 0.2, ease: "easeOut"}}
@@ -69,7 +69,7 @@ const Testimonial = () => {
             ref={(el) => (cardRefs.current[index] = el)}
             onMouseMove={(e) => handleMouseMove(e, index)}
             onMouseLeave={handleMouseLeave}
-            className="relative bg-gray-200 rounded-lg overflow-hidden max-w-sm border border-borderColor shadow-md hover:shadow-lg transition-shadow duration-300"
+            className="relative bg-gray-200 w-full mx-auto rounded-lg overflow-hidden max-w-sm border border-borderColor shadow-md hover:shadow-lg transition-shadow duration-300"
           >
             {tooltip.visible && tooltip.text === testimonial.name && (
               <span

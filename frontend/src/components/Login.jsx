@@ -9,8 +9,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [type, setType] = useState("Log in");
+  const [logging, setLogging] = useState(false)
 
   const handleSubmit = (e) => {
+    setLogging(true)
     e.preventDefault();
     if (type === "Log in") {
       login({email, password});
@@ -21,6 +23,9 @@ const Login = () => {
         toast.error("Passwords do not match");
       }
     }
+    setTimeout(() => {
+      setLogging(false)
+    }, 2000);
   };
 
   useEffect(() => {
@@ -97,7 +102,8 @@ const Login = () => {
           )}
           <button
             type="submit"
-            className="w-full bg-primary py-2.5 rounded-full text-white cursor-pointer my-2 hover:bg-primary-dull transition-all duration-200"
+            disabled={logging}
+            className={`w-full bg-primary py-2.5 rounded-full text-white ${logging ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} my-2 hover:bg-primary-dull transition-all duration-200`}
           >
             {type}
           </button>

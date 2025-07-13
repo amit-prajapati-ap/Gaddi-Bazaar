@@ -47,7 +47,7 @@ const ManageBookings = () => {
         <table className='w-full border-collapse text-left text-sm text-gray-600'>
           <thead className='text-gray-500'>
             <tr>
-              <th className='p-3 font-medium'>booking.car</th>
+              <th className='p-3 font-medium'>car</th>
               <th className='p-3 font-medium max-[830px]:hidden'>Date Range</th>
               <th className='p-3 font-medium'>Total</th>
               <th className='p-3 font-medium max-[490px]:hidden'>Payment</th>

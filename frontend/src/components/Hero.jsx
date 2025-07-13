@@ -26,11 +26,11 @@ const Hero = () => {
             </div>
             <div>
                 <label htmlFor="pickup-date">Pick-up Date</label>
-                <input value={pickupDate} onChange={(e) => setPickupDate(e.target.value)} type="date" id='pickup-date' min={new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer text-gray-500' required />
+                <input value={pickupDate} placeholder='mm-dd-yyyy' onChange={(e) => setPickupDate(e.target.value)} type="date" id='pickup-date' min={new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer text-gray-500 border rounded-sm border-gray-200 px-2' required />
             </div>
             <div>
                 <label htmlFor="return-date">Return Date</label>
-                <input value={returnDate} onChange={(e) => setReturnDate(e.target.value)} type="date" id='return-date' min={pickupDate ? pickupDate : new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer text-gray-500' required />
+                <input value={returnDate} onChange={(e) => setReturnDate(e.target.value)} placeholder='mm-dd-yyyy' type="date" id='return-date' min={pickupDate ? pickupDate : new Date().toISOString().split("T")[0]} className='text-sm cursor-pointer border rounded-sm border-gray-200 px-2 text-gray-500' required />
             </div>
         </div>
             <motion.button whileHover={{scale: 1.05}} whileTap={{scale: 0.95}} className='flex items-center justify-center gap-1 px-9 py-3 max-sm:mt-4 bg-primary hover:bg-primary-dull text-white rounded-full cursor-pointer'><img src={assets.search_icon} alt="search" className='brightness-300' />Search</motion.button>
